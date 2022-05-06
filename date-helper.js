@@ -30,4 +30,5 @@ const isPast = (startTime) => {
 
 module.exports = {
   humanReadableDateTime,
+  isPast
 };
