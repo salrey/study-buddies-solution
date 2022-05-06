@@ -23,6 +23,7 @@ const getAllEvents = async (id) => {
     const upcoming_events = allEvents.filter((event) => !isPast(event))
 
     return [past_events, upcoming_events];
+    
   } catch (error) {
     return error;
   }
