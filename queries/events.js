@@ -1,5 +1,37 @@
 const db = require("../db/dbConfig.js");
 
+// const getEvent = async (id) => {
+//   try {
+//     const oneEvent = await db.one(
+//       "SELECT *, end_time - start_time as duration FROM events WHERE id=$1",
+//       id
+//     );
+//     return oneEvent;
+//   } catch (error) {
+//     return error;
+//   }
+// };
+
+const getOrder = async (string) => {
+  try {
+    let order = "";
+    if (string === "ascending") {
+      order = await db.any(
+        ` SELECT * FROM events ORDER BY number_of_attendees asc `
+      );
+    } else if (string === "descending") {
+      order = await db.any(
+        ` SELECT * FROM events ORDER BY number_of_attendees desc `
+      );
+    } else {
+      order = await db.any(` SELECT * FROM events`);
+    }
+    return order;
+  } catch (error) {
+    return error;
+  }
+};
+
 const getAllEvents = async (id) => {
   try {
     const allEvents = await db.any(
@@ -88,4 +120,5 @@ module.exports = {
   getEvent,
   createEvent,
   updateEvent,
+  getOrder,
 };

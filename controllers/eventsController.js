@@ -2,8 +2,22 @@ const express = require("express");
 
 const events = express.Router();
 
-const { getEvent, createEvent, updateEvent } = require("../queries/events.js");
+const {
+  getEvent,
+  createEvent,
+  updateEven,
+  getOrder,
+} = require("../queries/events.js");
 const { humanReadableDateTime } = require("../date-helper.js");
+
+events.get("/:popularity", async (req, res) => {
+  try {
+    const ordered = await getOrder(req.params.popularity);
+    res.status(200).json(ordered);
+  } catch (error) {
+    res.status(404).json({ Error: error });
+  }
+});
 
 // Create
 events.post("/", async (req, res) => {
