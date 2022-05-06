@@ -1,5 +1,7 @@
 # study-buddies-solution
 
+- complete solution
+
 ## Reference Apps
 
 [CTA Final Project](https://github.com/joinpursuit/pern-final-project-template)
