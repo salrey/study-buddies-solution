@@ -1,5 +1,8 @@
 const db = require("../db/dbConfig.js");
 
+const { isPast } = require("../date-helper.js");
+
+
 const getAllEvents = async (id) => {
   try {
     const allEvents = await db.any(
@@ -15,7 +18,11 @@ const getAllEvents = async (id) => {
     WHERE groups.id=$1`,
       [id]
     );
-    return allEvents;
+
+    const past_events = allEvents.filter((event) => isPast(event))
+    const upcoming_events = allEvents.filter((event) => !isPast(event))
+
+    return [past_events, upcoming_events];
   } catch (error) {
     return error;
   }
