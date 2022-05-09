@@ -12,6 +12,7 @@ const {
 } = require("../queries/groups.js");
 
 const { getAllEvents, createEvent } = require("../queries/events.js");
+const { isPast } = require("../date-helper.js");
 // Index of Groups
 groups.get("/", async (req, res) => {
   let allGroups;
@@ -37,16 +38,10 @@ groups.get("/:id/events", async (req, res) => {
   try {
     if (allEvents[0]) {
       const pastEvents = allEvents.filter(
-        (event) =>
-          event.time_to_event.days > 0 ||
-          event.time_to_event.hours > 0 ||
-          event.time_to_event.minutes > 0
+        (event) => isPast(event.start_time)
       );
       const upcompingEvents = allEvents.filter(
-        (event) =>
-          event.time_to_event.days > 0 ||
-          event.time_to_event.hours > 0 ||
-          event.time_to_event.minutes > 0
+        (event) => !isPast(event.start_time)
       );
       res.status(200).json({ pastEvents, upcompingEvents });
     } else {
